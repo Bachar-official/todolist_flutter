@@ -1,8 +1,17 @@
+import 'package:todolist_flutter/entity/importance.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 import 'package:logger/logger.dart';
 
 class TodoRepo {
-  final List<Todo> todos = [];
+  final List<Todo> todos = [
+    ...List<Todo>.generate(
+        50,
+        ((i) => Todo(
+            description: 'Task $i',
+            isCompleted: false,
+            importance: Importance.none,
+            doUntil: null))),
+  ];
   final Logger logger = Logger();
 
   void addTodo(Todo todo) {

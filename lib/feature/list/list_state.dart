@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/entity/todo.dart';
-import 'package:logger/logger.dart';
-import 'package:todolist_flutter/repository/todo_repo.dart';
 
-class ListState extends ChangeNotifier {
-  bool onlyCompleted = false;
-  var logger = Logger();
+@immutable
+class ListState {
+  final List<Todo> list;
+  final bool isCompleted;
 
-  List<Todo> get list => repo.getFilteredList(onlyCompleted);
+  const ListState({required this.list, required this.isCompleted});
 
-  void setOnlyCompleted(bool? value) {
-    if (value != null) {
-      onlyCompleted = value;
-      notifyListeners();
-      logger.i('Set "only completed" to $value');
-    }
-  }
+  const ListState.initial()
+      : list = const [],
+        isCompleted = false;
 
-  void removeTodo(int index) {
-    repo.removeTodo(index);
-    notifyListeners();
-    logger.i('Removed item number $index');
-  }
-
-  void addTodo(Todo todo) {
-    repo.addTodo(todo);
-    notifyListeners();
-    logger.i('Added item $todo');
+  ListState copyWith({List<Todo>? list, bool? isCompleted}) {
+    return ListState(
+      list: list ?? this.list,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
   }
 }

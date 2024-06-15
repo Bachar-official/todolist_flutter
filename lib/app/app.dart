@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/app/routing.dart';
 import 'package:todolist_flutter/constants/themes.dart';
-import 'package:todolist_flutter/feature/list/list_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'Todo List',
-        home: const ListScreen(),
+        onGenerateRoute: AppRouter.onGenerateRoute,
         theme: lightTheme,
         darkTheme: darkTheme,
       );

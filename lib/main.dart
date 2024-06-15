@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todolist_flutter/app/app.dart';
-import 'package:todolist_flutter/feature/list/list_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (ctx) => ListState()),
-      ],
-      child: const App(),
-    ),
-  );
+  runApp(const ProviderScope(child: App()));
 }

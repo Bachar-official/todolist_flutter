@@ -17,12 +17,29 @@ class TodoCard extends StatelessWidget {
           print('end to start');
         }
       },
-      child: Row(
-        children: [
-          Checkbox(value: todo.isCompleted, onChanged: null),
-          Text(todo.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.info_outline)),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Checkbox(value: todo.isCompleted, onChanged: null),
+            Expanded(
+              flex: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(todo.description,
+                      maxLines: 3, overflow: TextOverflow.ellipsis),
+                  Text('дата'),
+                ],
+              ),
+            ),
+            const Spacer(
+              flex: 1,
+            ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.info_outline)),
+          ],
+        ),
       ),
     );
   }
