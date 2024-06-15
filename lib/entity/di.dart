@@ -21,8 +21,13 @@ class DI {
   late final ItemManager itemManager;
 
   DI() {
-    listManager = ListManager(deps: deps, holder: listHolder);
     itemManager = ItemManager(deps: deps, holder: itemHolder);
+    listManager =
+        ListManager(deps: deps, holder: listHolder, itemManager: itemManager);
+  }
+
+  Future<void> init() async {
+    deps.logger.i('DI initialized');
   }
 }
 

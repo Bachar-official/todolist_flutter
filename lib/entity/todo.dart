@@ -1,16 +1,19 @@
 import 'package:todolist_flutter/entity/importance.dart';
+import 'package:uuid/v4.dart';
 
 class Todo {
   final bool isCompleted;
   final String description;
   final Importance importance;
   final DateTime? doUntil;
+  final String uuid;
 
   const Todo({
     required this.isCompleted,
     required this.description,
     required this.importance,
     required this.doUntil,
+    required this.uuid,
   });
 
   Todo copyWith(
@@ -24,6 +27,7 @@ class Todo {
       description: description ?? this.description,
       importance: importance ?? this.importance,
       doUntil: nullDoUntil ? null : doUntil ?? this.doUntil,
+      uuid: uuid,
     );
   }
 

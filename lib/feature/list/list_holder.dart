@@ -10,4 +10,8 @@ class ListHolder extends StateNotifier<ListState> {
   void setList(List<Todo> list) {
     state = state.copyWith(list: list);
   }
+
+  void setOnlyCompleted(bool isCompleted) {
+    state = state.copyWith(isCompleted: isCompleted);
+  }
 }

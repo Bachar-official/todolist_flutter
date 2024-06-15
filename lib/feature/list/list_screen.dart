@@ -27,26 +27,51 @@ class ListScreen extends ConsumerWidget {
               pinned: true,
               floating: false,
               expandedHeight: 120,
-              actions: [],
-              flexibleSpace: FlexibleSpaceBar(
+              actions: [
+                IconButton(
+                  onPressed: manager.setOnlyCompleted,
+                  icon: state.isCompleted
+                      ? const Icon(Icons.visibility)
+                      : const Icon(Icons.visibility_off),
+                ),
+              ],
+              flexibleSpace: const FlexibleSpaceBar(
                 title: Text('Мои дела'),
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: SizedBox(
                 height: 20,
-                child: Center(
-                  child: Text('Scroll to see the SliverAppBar in effect.'),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 73),
+                  child: Text(
+                    'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
+                    style: TextStyles.button,
+                  ),
                 ),
               ),
             ),
             SliverList.builder(
-                itemBuilder: (ctx, index) => TodoCard(todo: state.list[index]),
+                itemBuilder: (ctx, index) => TodoCard(
+                      todo: state.list[index],
+                      onGoToItemScreen: manager.goToItemScreen,
+                      onCheckTodo: manager.checkTodo,
+                      onRemoveTodo: manager.removeTodo,
+                    ),
                 itemCount: state.list.length),
+            SliverToBoxAdapter(
+              child: GestureDetector(
+                onTap: () => manager.goToItemScreen(null),
+                child: const Padding(
+                  padding: EdgeInsets.fromLTRB(73, 25, 25, 25),
+                  child: Text('Новое'),
+                ),
+              ),
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: manager.goToItemScreen,
+          onPressed: () => manager.goToItemScreen(null),
           child: const Icon(Icons.add),
         ),
       ),

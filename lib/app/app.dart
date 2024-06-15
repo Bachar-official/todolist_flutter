@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/app/routing.dart';
 import 'package:todolist_flutter/constants/themes.dart';
+import 'package:todolist_flutter/entity/di.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,5 +12,8 @@ class App extends StatelessWidget {
         onGenerateRoute: AppRouter.onGenerateRoute,
         theme: lightTheme,
         darkTheme: darkTheme,
+        scaffoldMessengerKey: di.deps.scaffoldKey,
+        navigatorKey: di.deps.navKey,
+        debugShowCheckedModeBanner: false,
       );
 }
