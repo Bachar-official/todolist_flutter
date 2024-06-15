@@ -15,8 +15,8 @@ class ListScreen extends StatelessWidget {
             title: const Text('Todo List'),
           ),
           body: ListView.builder(
-            itemBuilder: (ctx, index) => TodoCard(todo: state.todos[index]),
-            itemCount: state.todos.length,
+            itemBuilder: (ctx, index) => TodoCard(todo: state.list[index]),
+            itemCount: state.list.length,
           ),
         );
       },
