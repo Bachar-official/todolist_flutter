@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/components/todo_checkbox.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 
 class TodoCard extends StatelessWidget {
@@ -58,19 +59,23 @@ class TodoCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Checkbox(value: todo.isCompleted, onChanged: null),
+            TodoCheckbox(todo: todo),
             Expanded(
               flex: 5,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(todo.description,
-                      maxLines: 3, overflow: TextOverflow.ellipsis),
-                  Visibility(
-                    visible: todo.doUntil != null,
-                    child: Text(todo.doUntil.toString()),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(left: 17),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(todo.description,
+                        maxLines: 3, overflow: TextOverflow.ellipsis),
+                    Visibility(
+                      visible: todo.doUntil != null,
+                      child: Text(todo.doUntil.toString()),
+                    ),
+                  ],
+                ),
               ),
             ),
             const Spacer(

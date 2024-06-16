@@ -10,6 +10,7 @@ class LightPalette {
   static const labelDisable = Color(0x26000000);
 
   static const red = Color(0xFFFF3B30);
+  static const redOpacity = Color(0x55FF3B30);
   static const green = Color(0xFF34C759);
   static const blue = Color(0xFF007AFF);
   static const gray = Color(0xFF8E8E93);
@@ -31,6 +32,7 @@ class DarkPalette {
   static const labelDisable = Color(0x26FFFFFF);
 
   static const red = Color(0xFFFF453A);
+  static const redOpacity = Color(0x55FF453A);
   static const green = Color(0xFF32D74B);
   static const blue = Color(0xFF0A84FF);
   static const gray = Color(0xFF8E8E93);

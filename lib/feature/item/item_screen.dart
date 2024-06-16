@@ -6,6 +6,7 @@ import 'package:todolist_flutter/entity/di.dart';
 import 'package:todolist_flutter/entity/importance.dart';
 import 'package:todolist_flutter/feature/item/item_holder.dart';
 import 'package:todolist_flutter/feature/item/item_state.dart';
+import 'package:todolist_flutter/utils/validators.dart';
 
 final provider =
     StateNotifierProvider<ItemHolder, ItemState>((ref) => di.itemHolder);
@@ -42,6 +43,7 @@ class ItemScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
+                  validator: Validators.validateEmpty,
                   minLines: 3,
                   maxLines: 10,
                   controller: manager.descriptionC,

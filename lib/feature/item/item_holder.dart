@@ -24,7 +24,7 @@ class ItemHolder extends StateNotifier<ItemState> {
     if (doUntil == null) {
       state = state.copyWith(nullDoUntil: true, doUntil: null);
     } else {
-      state = state.copyWith(doUntil: doUntil);
+      state = state.copyWith(doUntil: doUntil, nullDoUntil: false);
     }
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todolist_flutter/app/routing.dart';
 import 'package:todolist_flutter/components/todo_card.dart';
 import 'package:todolist_flutter/constants/text_styles.dart';
 import 'package:todolist_flutter/entity/di.dart';
@@ -63,7 +62,7 @@ class ListScreen extends ConsumerWidget {
               child: GestureDetector(
                 onTap: () => manager.goToItemScreen(null),
                 child: const Padding(
-                  padding: EdgeInsets.fromLTRB(73, 25, 25, 25),
+                  padding: EdgeInsets.fromLTRB(73, 0, 25, 25),
                   child: Text('Новое'),
                 ),
               ),

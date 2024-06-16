@@ -1,5 +1,4 @@
 import 'package:todolist_flutter/entity/importance.dart';
-import 'package:uuid/v4.dart';
 
 class Todo {
   final bool isCompleted;

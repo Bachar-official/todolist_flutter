@@ -9,7 +9,7 @@ class IconLabelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color _getButtonColor() {
+    Color getButtonColor() {
       var brightness = Theme.of(context).brightness;
       if (brightness == Brightness.dark && onPressed != null) {
         return DarkPalette.red;
@@ -24,23 +24,19 @@ class IconLabelButton extends StatelessWidget {
       }
     }
 
-    var brightness = Theme.of(context).brightness;
-    var buttonColor =
-        brightness == Brightness.dark ? DarkPalette.red : LightPalette.red;
-
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.all<Color>(_getButtonColor()),
+        foregroundColor: WidgetStateProperty.all<Color>(getButtonColor()),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.delete, color: _getButtonColor()),
+          Icon(Icons.delete, color: getButtonColor()),
           Text(
             label,
-            style: TextStyle(color: _getButtonColor()),
+            style: TextStyle(color: getButtonColor()),
           ),
         ],
       ),

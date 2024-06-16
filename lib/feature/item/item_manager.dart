@@ -48,7 +48,14 @@ class ItemManager {
   void save() {
     if (formKey.currentState!.validate()) {
       if (holder.oState.todo != null) {
-        deps.repo.editTodo(holder.oState.todo!);
+        Todo newTodo = holder.oState.todo!.copyWith(
+          description: descriptionC.text,
+          importance: holder.oState.importance,
+          doUntil: holder.oState.doUntil,
+          nullDoUntil: holder.oState.doUntil == null,
+        );
+        print('New: $newTodo');
+        deps.repo.editTodo(newTodo);
       } else {
         deps.repo.addTodo(Todo(
             uuid: const UuidV4().generate(),
@@ -70,13 +77,5 @@ class ItemManager {
     deps.repo.removeTodo(holder.oState.todo!.uuid);
     _clearForm();
     goBack();
-  }
-
-  void Function()? onRemove() {
-    if (holder.oState.todo == null) {
-      return null;
-    } else {
-      return remove;
-    }
   }
 }

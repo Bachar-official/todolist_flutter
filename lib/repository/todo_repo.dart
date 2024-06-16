@@ -1,7 +1,5 @@
-import 'package:todolist_flutter/entity/importance.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 import 'package:logger/logger.dart';
-import 'package:uuid/v4.dart';
 
 class TodoRepo {
   final List<Todo> todos = [];
@@ -21,6 +19,7 @@ class TodoRepo {
     int index = todos.indexWhere((t) => t.uuid == todo.uuid);
     todos[index] = todo;
     logger.i('Edited item number $index');
+    print(todos);
   }
 
   void checkTodo(String uuid) {

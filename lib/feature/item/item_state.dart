@@ -24,8 +24,8 @@ class ItemState {
   }) {
     return ItemState(
       importance: importance ?? this.importance,
-      doUntil: nullDoUntil == true ? null : doUntil ?? this.doUntil,
-      todo: nullTodo == true ? null : todo ?? this.todo,
+      doUntil: nullDoUntil ? null : doUntil ?? this.doUntil,
+      todo: nullTodo ? null : todo ?? this.todo,
     );
   }
 }
