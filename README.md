@@ -2,15 +2,11 @@
 
 A new Flutter project.
 
-## Getting Started
+## Download link
 
-This project is a starting point for a Flutter application.
+[Over here](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/app.apk)
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Dark theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr2.png?raw=true)
+![Light theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr2.png?raw=true)
