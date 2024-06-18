@@ -96,11 +96,17 @@ class TodoCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          todo.description,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: getDescriptionStyle(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            todo.importance.getIcon(),
+                            Text(
+                              todo.description,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: getDescriptionStyle(),
+                            ),
+                          ],
                         ),
                         Visibility(
                           visible: todo.doUntil != null,

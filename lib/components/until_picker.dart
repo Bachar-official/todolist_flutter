@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_flutter/constants/palette.dart';
+import 'package:todolist_flutter/utils/readable_date.dart';
 
 class UntilPicker extends StatelessWidget {
   final DateTime? doUntil;
@@ -7,6 +9,7 @@ class UntilPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var brightness = Theme.of(context).brightness;
     Future<DateTime?> onChangeDate() => showDatePicker(
           context: context,
           firstDate: DateTime.now(),
@@ -21,6 +24,7 @@ class UntilPicker extends StatelessWidget {
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,7 +45,11 @@ class UntilPicker extends StatelessWidget {
           Visibility(
             visible: doUntil != null,
             child: Text(
-              doUntil.toString(),
+              getReadableDate(doUntil),
+              style: TextStyle(
+                  color: brightness == Brightness.dark
+                      ? DarkPalette.blue
+                      : LightPalette.blue),
             ),
           ),
         ],

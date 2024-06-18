@@ -45,6 +45,11 @@ ThemeData lightTheme = ThemeData(
   datePickerTheme: const DatePickerThemeData(
     headerBackgroundColor: LightPalette.blue,
     surfaceTintColor: LightPalette.blue,
+    todayForegroundColor: WidgetStatePropertyAll(LightPalette.blue),
+    rangeSelectionBackgroundColor: LightPalette.blue,
+    rangeSelectionOverlayColor: WidgetStatePropertyAll(LightPalette.blue),
+    rangePickerBackgroundColor: LightPalette.blue,
+    dayOverlayColor: WidgetStatePropertyAll(LightPalette.blue),
   ),
 );
 
@@ -94,6 +99,7 @@ ThemeData darkTheme = ThemeData(
     todayForegroundColor: WidgetStatePropertyAll(DarkPalette.blue),
     rangeSelectionBackgroundColor: DarkPalette.blue,
     rangeSelectionOverlayColor: WidgetStatePropertyAll(DarkPalette.blue),
+    rangePickerBackgroundColor: DarkPalette.blue,
     dayOverlayColor: WidgetStatePropertyAll(DarkPalette.blue),
   ),
 );

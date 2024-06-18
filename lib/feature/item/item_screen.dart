@@ -64,10 +64,7 @@ class ItemScreen extends ConsumerWidget {
                       border: InputBorder.none,
                     ),
                     items: Importance.values
-                        .map((el) => DropdownMenuItem(
-                              value: el,
-                              child: Text(el.getImportanceName()),
-                            ))
+                        .map((el) => el.getDropdownItem())
                         .toList(),
                     onChanged: manager.setImportance),
                 divider,

@@ -16,10 +16,10 @@ class TodoRepo {
   }
 
   void editTodo(Todo todo) {
+    todo = todo.copyWith(isCompleted: false);
     int index = todos.indexWhere((t) => t.uuid == todo.uuid);
     todos[index] = todo;
     logger.i('Edited item number $index');
-    print(todos);
   }
 
   void checkTodo(String uuid) {
