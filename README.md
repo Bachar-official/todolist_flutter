@@ -8,5 +8,5 @@ A new Flutter project.
 
 ## Screenshots
 
-![Dark theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr2.png?raw=true)
+![Dark theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr1.png?raw=true)
 ![Light theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr2.png?raw=true)
