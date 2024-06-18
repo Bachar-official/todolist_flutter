@@ -67,12 +67,15 @@ class ListScreen extends ConsumerWidget {
                     ),
                 itemCount: state.list.length),
             SliverToBoxAdapter(
-              child: Card(
-                child: GestureDetector(
-                  onTap: () => manager.goToItemScreen(null),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(73, 20, 25, 25),
-                    child: Text('Новое', style: doneStyle),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Card(
+                  child: GestureDetector(
+                    onTap: () => manager.goToItemScreen(null),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(73, 20, 25, 25),
+                      child: Text('Новое', style: doneStyle),
+                    ),
                   ),
                 ),
               ),

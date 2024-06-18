@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/components/todo_checkbox.dart';
+import 'package:todolist_flutter/constants/palette.dart';
+import 'package:todolist_flutter/constants/text_styles.dart';
 import 'package:todolist_flutter/entity/todo.dart';
+import 'package:todolist_flutter/utils/readable_date.dart';
 
 class TodoCard extends StatelessWidget {
   final Todo todo;
@@ -16,6 +19,26 @@ class TodoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var bright = Theme.of(context).brightness;
+
+    TextStyle? getDescriptionStyle() {
+      return todo.isCompleted
+          ? TextStyle(
+              color: bright == Brightness.dark
+                  ? DarkPalette.labelTertiary
+                  : LightPalette.labelTertiary,
+              decoration: TextDecoration.lineThrough,
+            )
+          : null;
+    }
+
+    TextStyle getDateStyle() {
+      return TextStyle(
+          color: bright == Brightness.dark
+              ? DarkPalette.labelTertiary
+              : LightPalette.labelTertiary);
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Card(
@@ -73,11 +96,18 @@ class TodoCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(todo.description,
-                            maxLines: 3, overflow: TextOverflow.ellipsis),
+                        Text(
+                          todo.description,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: getDescriptionStyle(),
+                        ),
                         Visibility(
                           visible: todo.doUntil != null,
-                          child: Text(todo.doUntil.toString()),
+                          child: Text(
+                            getReadableDate(todo.doUntil),
+                            style: getDateStyle(),
+                          ),
                         ),
                       ],
                     ),

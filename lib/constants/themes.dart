@@ -12,12 +12,6 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: LightPalette.blue,
     foregroundColor: LightPalette.white,
   ),
-  // iconButtonTheme: IconButtonThemeData(
-  //   style: ButtonStyle(
-  //     foregroundColor: WidgetStateProperty.all<Color>(LightPalette.blue),
-  //   ),
-  // ),
-  // primaryColor: LightPalette.backPrimary,
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       textStyle: WidgetStateProperty.all<TextStyle>(TextStyles.button),
@@ -34,6 +28,24 @@ ThemeData lightTheme = ThemeData(
   ),
   cardColor: LightPalette.backSecondary,
   dividerColor: LightPalette.suportSeparator,
+  switchTheme: SwitchThemeData(
+    thumbColor: WidgetStateProperty.resolveWith<Color?>((state) {
+      if (state.contains(WidgetState.selected)) {
+        return LightPalette.blue;
+      }
+      return LightPalette.backElevated;
+    }),
+    trackColor: WidgetStateProperty.resolveWith<Color?>((state) {
+      if (state.contains(WidgetState.selected)) {
+        return LightPalette.darkBlue;
+      }
+      return null;
+    }),
+  ),
+  datePickerTheme: const DatePickerThemeData(
+    headerBackgroundColor: LightPalette.blue,
+    surfaceTintColor: LightPalette.blue,
+  ),
 );
 
 ThemeData darkTheme = ThemeData(
@@ -45,11 +57,6 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: DarkPalette.blue,
     foregroundColor: DarkPalette.white,
   ),
-  // iconButtonTheme: IconButtonThemeData(
-  //   style: ButtonStyle(
-  //     foregroundColor: WidgetStateProperty.all<Color>(DarkPalette.blue),
-  //   ),
-  // ),
   brightness: Brightness.dark,
   checkboxTheme: CheckboxThemeData(
     fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
@@ -67,4 +74,26 @@ ThemeData darkTheme = ThemeData(
   ),
   cardColor: DarkPalette.backSecondary,
   dividerColor: DarkPalette.suportSeparator,
+  switchTheme: SwitchThemeData(
+    thumbColor: WidgetStateProperty.resolveWith<Color?>((state) {
+      if (state.contains(WidgetState.selected)) {
+        return DarkPalette.blue;
+      }
+      return DarkPalette.backElevated;
+    }),
+    trackColor: WidgetStateProperty.resolveWith<Color?>((state) {
+      if (state.contains(WidgetState.selected)) {
+        return DarkPalette.darkBlue;
+      }
+      return null;
+    }),
+  ),
+  datePickerTheme: const DatePickerThemeData(
+    headerBackgroundColor: DarkPalette.blue,
+    surfaceTintColor: DarkPalette.blue,
+    todayForegroundColor: WidgetStatePropertyAll(DarkPalette.blue),
+    rangeSelectionBackgroundColor: DarkPalette.blue,
+    rangeSelectionOverlayColor: WidgetStatePropertyAll(DarkPalette.blue),
+    dayOverlayColor: WidgetStatePropertyAll(DarkPalette.blue),
+  ),
 );
