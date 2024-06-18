@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/components/todo_checkbox.dart';
 import 'package:todolist_flutter/constants/palette.dart';
-import 'package:todolist_flutter/constants/text_styles.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 import 'package:todolist_flutter/utils/readable_date.dart';
 
