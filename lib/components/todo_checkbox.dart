@@ -39,7 +39,7 @@ class TodoCheckbox extends StatelessWidget {
         if (todo.importance == Importance.high) {
           return DarkPalette.red;
         }
-        return Colors.pink;
+        return DarkPalette.suportSeparator;
       } else {
         if (todo.isCompleted) {
           return LightPalette.green;
@@ -47,12 +47,14 @@ class TodoCheckbox extends StatelessWidget {
         if (todo.importance == Importance.high) {
           return LightPalette.red;
         }
+        return LightPalette.suportSeparator;
       }
-      return Colors.pink;
     }
 
     return Checkbox(
       fillColor: WidgetStateProperty.all(getCheckboxColor()),
+      side: WidgetStateBorderSide.resolveWith(
+          (state) => BorderSide(color: getCheckboxBorderColor())),
       value: todo.isCompleted,
       onChanged: (_) {},
     );

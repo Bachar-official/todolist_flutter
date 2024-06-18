@@ -16,75 +16,82 @@ class TodoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      direction: DismissDirection.horizontal,
-      key: ValueKey<String>(todo.uuid),
-      onDismissed: (direction) {
-        if (direction == DismissDirection.endToStart) {
-          onRemoveTodo(todo);
-        } else {
-          onCheckTodo(todo);
-        }
-      },
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          onCheckTodo(todo);
-          return false;
-        } else {
-          return true;
-        }
-      },
-      secondaryBackground: const ColoredBox(
-        color: Colors.red,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Icon(Icons.delete),
-          ),
-        ),
-      ),
-      background: const ColoredBox(
-        color: Colors.green,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Icon(Icons.check),
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            TodoCheckbox(todo: todo),
-            Expanded(
-              flex: 5,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Card(
+        child: Dismissible(
+          direction: todo.isCompleted
+              ? DismissDirection.endToStart
+              : DismissDirection.horizontal,
+          key: ValueKey<String>(todo.uuid),
+          onDismissed: (direction) {
+            if (direction == DismissDirection.endToStart) {
+              onRemoveTodo(todo);
+            } else {
+              onCheckTodo(todo);
+            }
+          },
+          confirmDismiss: (direction) async {
+            if (direction == DismissDirection.startToEnd) {
+              onCheckTodo(todo);
+              return false;
+            } else {
+              return true;
+            }
+          },
+          secondaryBackground: const ColoredBox(
+            color: Colors.red,
+            child: Align(
+              alignment: Alignment.centerRight,
               child: Padding(
-                padding: const EdgeInsets.only(left: 17),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(todo.description,
-                        maxLines: 3, overflow: TextOverflow.ellipsis),
-                    Visibility(
-                      visible: todo.doUntil != null,
-                      child: Text(todo.doUntil.toString()),
-                    ),
-                  ],
-                ),
+                padding: EdgeInsets.all(16.0),
+                child: Icon(Icons.delete),
               ),
             ),
-            const Spacer(
-              flex: 1,
+          ),
+          background: const ColoredBox(
+            color: Colors.green,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Icon(Icons.check),
+              ),
             ),
-            IconButton(
-                onPressed: () => onGoToItemScreen(todo),
-                icon: const Icon(Icons.info_outline)),
-          ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TodoCheckbox(todo: todo),
+                Expanded(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 17),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(todo.description,
+                            maxLines: 3, overflow: TextOverflow.ellipsis),
+                        Visibility(
+                          visible: todo.doUntil != null,
+                          child: Text(todo.doUntil.toString()),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Spacer(
+                  flex: 1,
+                ),
+                IconButton(
+                    onPressed: () => onGoToItemScreen(todo),
+                    icon: const Icon(Icons.info_outline)),
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todolist_flutter/components/todo_card.dart';
+import 'package:todolist_flutter/constants/palette.dart';
 import 'package:todolist_flutter/constants/text_styles.dart';
 import 'package:todolist_flutter/entity/di.dart';
 import 'package:todolist_flutter/feature/list/list_holder.dart';
@@ -16,6 +17,13 @@ class ListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(provider);
     final manager = di.listManager;
+    final bright = Theme.of(context).brightness;
+
+    final doneStyle = TextStyles.button.copyWith(
+      color: bright == Brightness.dark
+          ? DarkPalette.labelTertiary
+          : LightPalette.labelTertiary,
+    );
 
     return SafeArea(
       child: Scaffold(
@@ -45,7 +53,7 @@ class ListScreen extends ConsumerWidget {
                   padding: const EdgeInsets.only(left: 73),
                   child: Text(
                     'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
-                    style: TextStyles.button,
+                    style: doneStyle,
                   ),
                 ),
               ),
@@ -59,11 +67,13 @@ class ListScreen extends ConsumerWidget {
                     ),
                 itemCount: state.list.length),
             SliverToBoxAdapter(
-              child: GestureDetector(
-                onTap: () => manager.goToItemScreen(null),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(73, 0, 25, 25),
-                  child: Text('Новое'),
+              child: Card(
+                child: GestureDetector(
+                  onTap: () => manager.goToItemScreen(null),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(73, 20, 25, 25),
+                    child: Text('Новое', style: doneStyle),
+                  ),
                 ),
               ),
             ),

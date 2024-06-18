@@ -24,6 +24,14 @@ ThemeData lightTheme = ThemeData(
       foregroundColor: WidgetStateProperty.all<Color>(LightPalette.blue),
     ),
   ),
+  checkboxTheme: CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(WidgetState.selected)) {
+        return LightPalette.green;
+      }
+      return null;
+    }),
+  ),
   cardColor: LightPalette.backSecondary,
   dividerColor: LightPalette.suportSeparator,
 );
@@ -43,7 +51,14 @@ ThemeData darkTheme = ThemeData(
   //   ),
   // ),
   brightness: Brightness.dark,
-  // primaryColor: DarkPalette.backPrimary,
+  checkboxTheme: CheckboxThemeData(
+    fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(WidgetState.selected)) {
+        return DarkPalette.green;
+      }
+      return null;
+    }),
+  ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       textStyle: WidgetStateProperty.all<TextStyle>(TextStyles.button),
