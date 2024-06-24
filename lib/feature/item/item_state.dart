@@ -11,7 +11,7 @@ class ItemState {
   const ItemState({this.doUntil, required this.importance, this.todo});
 
   const ItemState.initial()
-      : importance = Importance.none,
+      : importance = Importance.basic,
         doUntil = null,
         todo = null;
 

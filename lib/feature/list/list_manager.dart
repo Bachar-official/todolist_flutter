@@ -30,12 +30,12 @@ class ListManager {
   }
 
   void checkTodo(Todo todo) {
-    deps.repo.checkTodo(todo.uuid);
+    deps.repo.checkTodo(todo.id);
     getList();
   }
 
   void removeTodo(Todo todo) {
-    deps.repo.removeTodo(todo.uuid);
+    deps.repo.removeTodo(todo.id);
     getList();
   }
 }

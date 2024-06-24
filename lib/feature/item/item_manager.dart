@@ -17,8 +17,8 @@ class ItemManager {
   void setTodo(Todo? todo) {
     if (todo != null) {
       holder.setTodo(todo);
-      descriptionC.text = todo.description;
-      holder.setDoUntil(todo.doUntil);
+      descriptionC.text = todo.text;
+      holder.setDoUntil(todo.deadline);
       holder.setImportance(todo.importance);
     } else {
       holder.setTodo(null);
@@ -28,7 +28,7 @@ class ItemManager {
 
   void setImportance(Importance? importance) {
     if (importance == null) {
-      holder.setImportance(Importance.none);
+      holder.setImportance(Importance.basic);
     } else {
       holder.setImportance(importance);
     }
@@ -42,7 +42,7 @@ class ItemManager {
     descriptionC.clear();
     holder.setTodo(null);
     holder.setDoUntil(null);
-    holder.setImportance(Importance.none);
+    holder.setImportance(Importance.basic);
   }
 
   void save() {
@@ -58,11 +58,11 @@ class ItemManager {
         deps.repo.editTodo(newTodo);
       } else {
         deps.repo.addTodo(Todo(
-            uuid: const UuidV4().generate(),
-            description: descriptionC.text,
-            isCompleted: false,
+            id: const UuidV4().generate(),
+            text: descriptionC.text,
+            done: false,
             importance: holder.oState.importance,
-            doUntil: holder.oState.doUntil));
+            deadline: holder.oState.doUntil));
       }
       _clearForm();
       goBack();
@@ -74,7 +74,7 @@ class ItemManager {
   }
 
   void remove() {
-    deps.repo.removeTodo(holder.oState.todo!.uuid);
+    deps.repo.removeTodo(holder.oState.todo!.id);
     _clearForm();
     goBack();
   }

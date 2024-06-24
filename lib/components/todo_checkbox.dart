@@ -13,18 +13,18 @@ class TodoCheckbox extends StatelessWidget {
 
     Color? getCheckboxColor() {
       if (brightness == Brightness.dark) {
-        if (todo.isCompleted) {
+        if (todo.done) {
           return DarkPalette.green;
         }
-        if (todo.importance == Importance.high) {
+        if (todo.importance == Importance.important) {
           return DarkPalette.redOpacity;
         }
         return null;
       } else {
-        if (todo.isCompleted) {
+        if (todo.done) {
           return LightPalette.green;
         }
-        if (todo.importance == Importance.high) {
+        if (todo.importance == Importance.important) {
           return LightPalette.redOpacity;
         }
       }
@@ -33,18 +33,18 @@ class TodoCheckbox extends StatelessWidget {
 
     Color getCheckboxBorderColor() {
       if (brightness == Brightness.dark) {
-        if (todo.isCompleted) {
+        if (todo.done) {
           return DarkPalette.green;
         }
-        if (todo.importance == Importance.high) {
+        if (todo.importance == Importance.important) {
           return DarkPalette.red;
         }
         return DarkPalette.suportSeparator;
       } else {
-        if (todo.isCompleted) {
+        if (todo.done) {
           return LightPalette.green;
         }
-        if (todo.importance == Importance.high) {
+        if (todo.importance == Importance.important) {
           return LightPalette.red;
         }
         return LightPalette.suportSeparator;
@@ -55,7 +55,7 @@ class TodoCheckbox extends StatelessWidget {
       fillColor: WidgetStateProperty.all(getCheckboxColor()),
       side: WidgetStateBorderSide.resolveWith(
           (state) => BorderSide(color: getCheckboxBorderColor())),
-      value: todo.isCompleted,
+      value: todo.done,
       onChanged: (_) {},
     );
   }

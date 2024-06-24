@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 
 enum Importance {
-  none,
-  low,
-  high;
+  basic('basic'),
+  low('low'),
+  important('important');
+
+  final String name;
+
+  const Importance(this.name);
+
+  factory Importance.fromString(String name) => Importance.values.firstWhere((el) => el.name.toLowerCase() == name.toLowerCase());
+
+  @override
+  String toString() => name;
 
   String getImportanceName() {
     switch (this) {
       case Importance.low:
         return 'Низкий';
-      case Importance.high:
+      case Importance.important:
         return '!! Высокий';
-      case Importance.none:
+      case Importance.basic:
       default:
         return 'Нет';
     }
@@ -22,7 +31,7 @@ enum Importance {
     switch (this) {
       case Importance.low:
         return DropdownMenuItem(value: this, child: Text(name));
-      case Importance.high:
+      case Importance.important:
         return DropdownMenuItem(
           value: this,
           child: Text(
@@ -30,7 +39,7 @@ enum Importance {
             style: const TextStyle(color: Colors.red),
           ),
         );
-      case Importance.none:
+      case Importance.basic:
       default:
         return DropdownMenuItem(value: this, child: Text(name));
     }
@@ -40,9 +49,9 @@ enum Importance {
     switch (this) {
       case Importance.low:
         return const Icon(Icons.arrow_downward);
-      case Importance.high:
+      case Importance.important:
         return const Text('!!', style: TextStyle(color: Colors.red));
-      case Importance.none:
+      case Importance.basic:
       default:
         return const SizedBox.shrink();
     }
