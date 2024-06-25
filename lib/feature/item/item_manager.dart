@@ -3,6 +3,7 @@ import 'package:todolist_flutter/entity/importance.dart';
 import 'package:todolist_flutter/entity/manager_deps.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 import 'package:todolist_flutter/feature/item/item_holder.dart';
+import 'package:todolist_flutter/utils/check_conditions.dart';
 import 'package:uuid/v4.dart';
 
 class ItemManager {
@@ -47,23 +48,23 @@ class ItemManager {
 
   void save() {
     if (formKey.currentState!.validate()) {
-      if (holder.oState.todo != null) {
-        Todo newTodo = holder.oState.todo!.copyWith(
-          description: descriptionC.text,
-          importance: holder.oState.importance,
-          doUntil: holder.oState.doUntil,
-          nullDoUntil: holder.oState.doUntil == null,
-        );
-        print('New: $newTodo');
-        deps.repo.editTodo(newTodo);
-      } else {
-        deps.repo.addTodo(Todo(
-            id: const UuidV4().generate(),
-            text: descriptionC.text,
-            done: false,
-            importance: holder.oState.importance,
-            deadline: holder.oState.doUntil));
-      }
+      // if (holder.oState.todo != null) {
+      //   Todo newTodo = holder.oState.todo!.copyWith(
+      //     description: descriptionC.text,
+      //     importance: holder.oState.importance,
+      //     doUntil: holder.oState.doUntil,
+      //     nullDoUntil: holder.oState.doUntil == null,
+      //   );
+      //   print('New: $newTodo');
+      //   deps.repo.editTodo(newTodo);
+      // } else {
+      //   deps.repo.addTodo(Todo(
+      //       id: const UuidV4().generate(),
+      //       text: descriptionC.text,
+      //       done: false,
+      //       importance: holder.oState.importance,
+      //       deadline: holder.oState.doUntil));
+      // }
       _clearForm();
       goBack();
     }
@@ -74,7 +75,7 @@ class ItemManager {
   }
 
   void remove() {
-    deps.repo.removeTodo(holder.oState.todo!.id);
+    // deps.repo.removeTodo(holder.oState.todo!.id);
     _clearForm();
     goBack();
   }

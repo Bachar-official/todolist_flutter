@@ -14,4 +14,8 @@ class ListHolder extends StateNotifier<ListState> {
   void setOnlyCompleted(bool isCompleted) {
     state = state.copyWith(isCompleted: isCompleted);
   }
+
+  void setLoading(bool isLoading) {
+    state = state.copyWith(isLoading: isLoading);
+  }
 }

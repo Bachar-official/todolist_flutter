@@ -3,6 +3,7 @@ import 'package:todolist_flutter/entity/importance.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/utils/get_device_id.dart';
 import 'package:uuid/v4.dart';
+import 'dart:convert';
 
 class Todo {
   final bool done;
@@ -57,7 +58,21 @@ class Todo {
         color: json['color'] != null ? HexColor.fromHex(json['color']) : null,
       );
 
-  Map<String, dynamic> toJson() => {
+      factory Todo.fromDb(Map<String, Object?> object) => Todo(
+        id: object['id'] as String,
+        done: object['done'] as int == 1,
+        text: object['text'] as String,
+        importance: Importance.fromString(object['importance'] as String),
+        deadline: object['deadline'] != null
+            ? DateTime.fromMillisecondsSinceEpoch(object['deadline'] as int)
+            : null,
+        createdAt: DateTime.fromMillisecondsSinceEpoch(object['createdAt'] as int),
+        updatedAt: DateTime.fromMillisecondsSinceEpoch(object['updatedAt'] as int),
+        lastUpdatedBy: object['lastUpdatedBy'] as String,
+        color: object['color'] != null ? HexColor.fromHex(object['color'] as String) : null,
+      );
+
+  Map<String, dynamic> toMap() => {
         'id': id,
         'done': done,
         'text': text,
@@ -68,6 +83,10 @@ class Todo {
         'lastUpdatedBy': lastUpdatedBy,
         'color': color?.toHex(),
       };
+
+  String toJson() => jsonEncode({
+        'element': toMap(),
+      });
 
   Todo copyWith({
     bool? done,

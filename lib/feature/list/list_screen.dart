@@ -52,7 +52,8 @@ class ListScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 73),
                   child: Text(
-                    'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
+                    // 'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
+                    '',
                     style: doneStyle,
                   ),
                 ),

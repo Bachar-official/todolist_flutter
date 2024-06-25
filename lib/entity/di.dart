@@ -29,6 +29,7 @@ class DI {
 
   Future<void> init() async {
     deps.logger.i('DI initialized');
+    await listManager.getList();
   }
 }
 
