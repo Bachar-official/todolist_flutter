@@ -38,9 +38,23 @@ class TodoCard extends StatelessWidget {
               : LightPalette.labelTertiary);
     }
 
+    ShapeBorder? getShapeBorder() {
+      if (todo.color != null) {
+        return RoundedRectangleBorder(
+          side: BorderSide(
+            width: 2.0,
+            color: todo.color!,
+          ),
+          borderRadius: BorderRadius.circular(20.0),
+        );
+      }
+      return null;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Card(
+        shape: getShapeBorder(),
         child: Dismissible(
           direction: todo.done
               ? DismissDirection.endToStart

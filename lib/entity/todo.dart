@@ -13,7 +13,7 @@ class Todo {
   final String id;
   final Color? color;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime changedAt;
   final String lastUpdatedBy;
 
   const Todo({
@@ -25,7 +25,7 @@ class Todo {
     required this.color,
     required this.createdAt,
     required this.lastUpdatedBy,
-    required this.updatedAt,
+    required this.changedAt,
   });
 
   Todo.initial(
@@ -36,7 +36,7 @@ class Todo {
       Color? crColor})
       : id = const UuidV4().generate(),
         createdAt = DateTime.now(),
-        updatedAt = DateTime.now(),
+        changedAt = DateTime.now(),
         lastUpdatedBy = getDeviceId(),
         done = crDone,
         text = crText,
@@ -52,13 +52,13 @@ class Todo {
         deadline: json['deadline'] != null
             ? DateTime.fromMillisecondsSinceEpoch(json['deadline'])
             : null,
-        createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt']),
-        updatedAt: DateTime.fromMillisecondsSinceEpoch(json['updatedAt']),
-        lastUpdatedBy: json['lastUpdatedBy'],
+        createdAt: DateTime.fromMillisecondsSinceEpoch(json['created_at']),
+        changedAt: DateTime.fromMillisecondsSinceEpoch(json['changed_at']),
+        lastUpdatedBy: json['last_updated_by'],
         color: json['color'] != null ? HexColor.fromHex(json['color']) : null,
       );
 
-      factory Todo.fromDb(Map<String, Object?> object) => Todo(
+  factory Todo.fromDb(Map<String, Object?> object) => Todo(
         id: object['id'] as String,
         done: object['done'] as int == 1,
         text: object['text'] as String,
@@ -66,11 +66,27 @@ class Todo {
         deadline: object['deadline'] != null
             ? DateTime.fromMillisecondsSinceEpoch(object['deadline'] as int)
             : null,
-        createdAt: DateTime.fromMillisecondsSinceEpoch(object['createdAt'] as int),
-        updatedAt: DateTime.fromMillisecondsSinceEpoch(object['updatedAt'] as int),
+        createdAt:
+            DateTime.fromMillisecondsSinceEpoch(object['createdAt'] as int),
+        changedAt:
+            DateTime.fromMillisecondsSinceEpoch(object['updatedAt'] as int),
         lastUpdatedBy: object['lastUpdatedBy'] as String,
-        color: object['color'] != null ? HexColor.fromHex(object['color'] as String) : null,
+        color: object['color'] != null
+            ? HexColor.fromHex(object['color'] as String)
+            : null,
       );
+
+  Map<String, dynamic> toDb() => {
+        'id': id,
+        'done': done ? 1 : 0,
+        'text': text,
+        'importance': importance.name,
+        'deadline': deadline?.millisecondsSinceEpoch,
+        'createdAt': createdAt.millisecondsSinceEpoch,
+        'updatedAt': changedAt.millisecondsSinceEpoch,
+        'lastUpdatedBy': lastUpdatedBy,
+        'color': color?.toHex(),
+      };
 
   Map<String, dynamic> toMap() => {
         'id': id,
@@ -78,9 +94,9 @@ class Todo {
         'text': text,
         'importance': importance.name,
         'deadline': deadline?.millisecondsSinceEpoch,
-        'createdAt': createdAt.millisecondsSinceEpoch,
-        'updatedAt': updatedAt.millisecondsSinceEpoch,
-        'lastUpdatedBy': lastUpdatedBy,
+        'created_at': createdAt.millisecondsSinceEpoch,
+        'changed_at': changedAt.millisecondsSinceEpoch,
+        'last_updated_by': lastUpdatedBy,
         'color': color?.toHex(),
       };
 
@@ -98,7 +114,7 @@ class Todo {
     String? id,
     Color? color,
     DateTime? createdAt,
-    DateTime? updatedAt,
+    DateTime? changedAt,
     String? lastUpdatedBy,
   }) {
     return Todo(
@@ -110,7 +126,7 @@ class Todo {
       color: nullColor ? null : color ?? this.color,
       createdAt: createdAt ?? this.createdAt,
       lastUpdatedBy: lastUpdatedBy ?? this.lastUpdatedBy,
-      updatedAt: updatedAt ?? this.updatedAt,
+      changedAt: changedAt ?? this.changedAt,
     );
   }
 
@@ -122,7 +138,7 @@ class Todo {
       'importance: $importance\n'
       'deadline: $deadline\n'
       'createdAt: $createdAt\n'
-      'updatedAt: $updatedAt\n'
+      'updatedAt: $changedAt\n'
       'lastUpdatedBy: $lastUpdatedBy\n'
       'color: $color\n';
 }

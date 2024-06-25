@@ -13,7 +13,7 @@ class DI {
     navKey: GlobalKey<NavigatorState>(),
     scaffoldKey: GlobalKey<ScaffoldMessengerState>(),
     logger: Logger(),
-    repo: NetRepo(dio: Dio()),
+    repo: NetRepo(dio: Dio(BaseOptions())),
   );
 
   final listHolder = ListHolder();

@@ -27,62 +27,66 @@ class ListScreen extends ConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              snap: false,
-              pinned: true,
-              floating: false,
-              expandedHeight: 120,
-              actions: [
-                IconButton(
-                  onPressed: manager.setOnlyCompleted,
-                  icon: state.isCompleted
-                      ? const Icon(Icons.visibility)
-                      : const Icon(Icons.visibility_off),
-                ),
-              ],
-              flexibleSpace: const FlexibleSpaceBar(
-                title: Text('Мои дела'),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 20,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 73),
-                  child: Text(
-                    // 'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
-                    '',
-                    style: doneStyle,
-                  ),
-                ),
-              ),
-            ),
-            SliverList.builder(
-                itemBuilder: (ctx, index) => TodoCard(
-                      todo: state.list[index],
-                      onGoToItemScreen: manager.goToItemScreen,
-                      onCheckTodo: manager.checkTodo,
-                      onRemoveTodo: manager.removeTodo,
+        body: state.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    snap: false,
+                    pinned: true,
+                    floating: false,
+                    expandedHeight: 120,
+                    actions: [
+                      IconButton(
+                        onPressed: manager.setOnlyCompleted,
+                        icon: state.isCompleted
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
+                      ),
+                    ],
+                    flexibleSpace: const FlexibleSpaceBar(
+                      title: Text('Мои дела'),
                     ),
-                itemCount: state.list.length),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Card(
-                  child: GestureDetector(
-                    onTap: () => manager.goToItemScreen(null),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 20,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 73),
+                        child: Text(
+                          // 'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
+                          '',
+                          style: doneStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverList.builder(
+                      itemBuilder: (ctx, index) => TodoCard(
+                            todo: state.list[index],
+                            onGoToItemScreen: manager.goToItemScreen,
+                            onCheckTodo: manager.checkTodo,
+                            onRemoveTodo: manager.removeTodo,
+                          ),
+                      itemCount: state.list.length),
+                  SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(73, 20, 25, 25),
-                      child: Text('Новое', style: doneStyle),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Card(
+                        child: GestureDetector(
+                          onTap: () => manager.goToItemScreen(null),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(73, 20, 25, 25),
+                            child: Text('Новое', style: doneStyle),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => manager.goToItemScreen(null),
           child: const Icon(Icons.add),
