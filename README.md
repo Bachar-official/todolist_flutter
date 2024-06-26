@@ -1,12 +1,13 @@
 # todolist_flutter
 
-A new Flutter project.
+Awesome To do application.
 
 ## Features
 
-- [x] Creating, updating, deleting todo
-- [ ] Fetching updates from API
-- [ ] Offline mode
+- [x] CRUD operations with API
+- [x] CRUD operaitons with local DB
+- [x] Syncronization
+- [x] Dark theme already supported
 
 ## Download link
 
