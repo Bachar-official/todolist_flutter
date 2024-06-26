@@ -7,11 +7,18 @@ class ListState {
   final bool isCompleted;
   final bool isLoading;
 
-  const ListState({required this.list, required this.isCompleted, required this.isLoading});
+  const ListState(
+      {required this.list, required this.isCompleted, required this.isLoading});
+
+  List<Todo> get viewList => isCompleted
+      ? list.where((todo) => todo.done == isCompleted).toList()
+      : list;
+  int get doneLength => list.where((todo) => todo.done).length;
 
   const ListState.initial()
       : list = const [],
-        isCompleted = false, isLoading = false;
+        isCompleted = false,
+        isLoading = false;
 
   ListState copyWith({List<Todo>? list, bool? isCompleted, bool? isLoading}) {
     return ListState(

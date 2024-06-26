@@ -3,6 +3,7 @@ import 'package:todolist_flutter/entity/manager_deps.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 import 'package:todolist_flutter/feature/item/item_manager.dart';
 import 'package:todolist_flutter/feature/list/list_holder.dart';
+import 'package:todolist_flutter/repository/db_repo.dart';
 import 'package:todolist_flutter/utils/catch_exceptions.dart';
 import 'package:todolist_flutter/utils/check_conditions.dart';
 import 'package:todolist_flutter/utils/logging.dart';
@@ -17,14 +18,13 @@ class ListManager {
   void setLoading(bool isLoading) => holder.setLoading(isLoading);
 
   Future<void> getList() async {
-    deps.logger.d('Trying to get todo list');
+    d(deps)('Trying to get todo list');
     try {
       setLoading(true);
-      var response = await deps.repo.getTodos();
-      checkCondition((condition: response == null, message: 'Ошибка при получении списка задач'));
-      holder.setList(response!.todos);
-      i(deps)('List loaded successfully');
-    } catch(e, s) {
+      var list = await deps.repo.getList();
+      holder.setList(list);
+      i(deps)('Fetched list with ${list.length} items');
+    } catch (e, s) {
       catchExceptions(e, s, deps);
     } finally {
       setLoading(false);
@@ -33,22 +33,42 @@ class ListManager {
 
   void setOnlyCompleted() {
     holder.setOnlyCompleted(!holder.oState.isCompleted);
-    getList();
   }
 
   void goToItemScreen(Todo? todo) async {
+    setLoading(true);
     itemManager.setTodo(todo);
     await deps.navKey.currentState!.pushNamed(AppRouter.itemScreen);
-    getList();
+    await getList();
   }
 
-  void checkTodo(Todo todo) {
-    // deps.repo.checkTodo(todo.id);
-    getList();
+  Future<void> checkTodo(Todo todo) async {
+    Todo checkedTodo = todo.copyWith(done: true);
+    d(deps)('Try to check todo ${todo.id}');
+    setLoading(true);
+    try {
+      var newList = await deps.repo.inlineUpdateTodo(checkedTodo);
+      i(deps)('Todo ${todo.id} checked successfully');
+      holder.setList(newList);
+    } catch (e, s) {
+      catchExceptions(e, s, deps);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  void removeTodo(Todo todo) {
-    // deps.repo.removeTodo(todo.id);
+  Future<void> removeTodo(Todo todo) async {
+    d(deps)('Try to remove todo ${todo.id}');
+    setLoading(true);
+    try {
+      var newList = await deps.repo.inlineDeleteTodo(todo);
+      i(deps)('Todo ${todo.id} removed successfully');
+      holder.setList(newList);
+    } catch (e, s) {
+      catchExceptions(e, s, deps);
+    } finally {
+      setLoading(false);
+    }
     getList();
   }
 }

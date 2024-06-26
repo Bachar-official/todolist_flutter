@@ -6,25 +6,33 @@ import 'package:todolist_flutter/entity/todo.dart';
 class ItemState {
   final Todo? todo;
   final Importance importance;
-  final DateTime? doUntil;
+  final DateTime? deadline;
+  final bool isLoading;
 
-  const ItemState({this.doUntil, required this.importance, this.todo});
+  const ItemState(
+      {this.deadline,
+      required this.importance,
+      this.todo,
+      required this.isLoading});
 
   const ItemState.initial()
       : importance = Importance.basic,
-        doUntil = null,
-        todo = null;
+        deadline = null,
+        todo = null,
+        isLoading = false;
 
   ItemState copyWith({
     Importance? importance,
-    DateTime? doUntil,
-    bool nullDoUntil = false,
+    DateTime? deadline,
+    bool nullDeadline = false,
     Todo? todo,
     bool nullTodo = false,
+    bool? isLoading,
   }) {
     return ItemState(
+      isLoading: isLoading ?? this.isLoading,
       importance: importance ?? this.importance,
-      doUntil: nullDoUntil ? null : doUntil ?? this.doUntil,
+      deadline: nullDeadline ? null : deadline ?? this.deadline,
       todo: nullTodo ? null : todo ?? this.todo,
     );
   }

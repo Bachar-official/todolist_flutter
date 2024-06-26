@@ -20,11 +20,15 @@ class ItemHolder extends StateNotifier<ItemState> {
     state = state.copyWith(importance: importance);
   }
 
-  void setDoUntil(DateTime? doUntil) {
+  void setDeadline(DateTime? doUntil) {
     if (doUntil == null) {
-      state = state.copyWith(nullDoUntil: true, doUntil: null);
+      state = state.copyWith(nullDeadline: true, deadline: null);
     } else {
-      state = state.copyWith(doUntil: doUntil, nullDoUntil: false);
+      state = state.copyWith(deadline: doUntil, nullDeadline: false);
     }
+  }
+
+  void setIsLoading(bool isLoading) {
+    state = state.copyWith(isLoading: isLoading);
   }
 }

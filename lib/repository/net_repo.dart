@@ -25,7 +25,7 @@ class NetRepo {
     }
   }
 
-  Future<TodoListResponse?> getTodos() async {
+  Future<TodoListResponse> getTodos() async {
     var response = await dio.get(Urls.listUrl, options: getOptions);
     if (response.statusCode == 200) {
       var array = response.data['list'] as List<dynamic>;
@@ -34,7 +34,7 @@ class NetRepo {
         revision: response.data['revision'] as int
       );
     }
-    return null;
+    return (todos: <Todo>[], revision: 0);
   }
 
   Future<TodoResponse?> getTodo(String id) async {

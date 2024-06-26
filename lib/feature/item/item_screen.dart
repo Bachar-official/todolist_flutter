@@ -21,66 +21,74 @@ class ItemScreen extends ConsumerWidget {
     final state = ref.watch(provider);
     final manager = di.itemManager;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: manager.goBack,
-          icon: const Icon(Icons.close),
-        ),
-        actions: [
-          TextButton(
-            onPressed: manager.save,
-            child: const Text('СОХРАНИТЬ'),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Form(
-            key: manager.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  validator: Validators.validateEmpty,
-                  minLines: 3,
-                  maxLines: 10,
-                  controller: manager.descriptionC,
-                  decoration: const InputDecoration(
-                    hintText: 'Что нужно сделать...',
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300),
+      transitionBuilder: (Widget child, Animation<double> animation) =>
+          FadeTransition(opacity: animation, child: child),
+      child: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  onPressed: manager.goBack,
+                  icon: const Icon(Icons.close),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: manager.save,
+                    child: const Text('СОХРАНИТЬ'),
+                  )
+                ],
+              ),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Form(
+                    key: manager.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          validator: Validators.validateEmpty,
+                          minLines: 3,
+                          maxLines: 10,
+                          controller: manager.descriptionC,
+                          decoration: const InputDecoration(
+                            hintText: 'Что нужно сделать...',
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                        DropdownButtonFormField<Importance>(
+                            value: state.importance,
+                            iconSize: 0.0,
+                            decoration: const InputDecoration(
+                              labelText: 'Важность',
+                              suffix: null,
+                              border: InputBorder.none,
+                            ),
+                            items: Importance.values
+                                .map((el) => el.getDropdownItem())
+                                .toList(),
+                            onChanged: manager.setImportance),
+                        divider,
+                        UntilPicker(
+                          doUntil: state.deadline,
+                          onChange: manager.setDoUntil,
+                        ),
+                        divider,
+                        IconLabelButton(
+                            label: 'Удалить',
+                            onPressed:
+                                state.todo == null ? null : manager.remove),
+                      ],
                     ),
                   ),
                 ),
-                DropdownButtonFormField<Importance>(
-                    value: state.importance,
-                    iconSize: 0.0,
-                    decoration: const InputDecoration(
-                      labelText: 'Важность',
-                      suffix: null,
-                      border: InputBorder.none,
-                    ),
-                    items: Importance.values
-                        .map((el) => el.getDropdownItem())
-                        .toList(),
-                    onChanged: manager.setImportance),
-                divider,
-                UntilPicker(
-                  doUntil: state.doUntil,
-                  onChange: manager.setDoUntil,
-                ),
-                divider,
-                IconLabelButton(
-                    label: 'Удалить',
-                    onPressed: state.todo == null ? null : manager.remove),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

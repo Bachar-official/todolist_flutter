@@ -5,6 +5,8 @@ import 'package:todolist_flutter/feature/item/item_holder.dart';
 import 'package:todolist_flutter/feature/item/item_manager.dart';
 import 'package:todolist_flutter/feature/list/list_holder.dart';
 import 'package:todolist_flutter/feature/list/list_manager.dart';
+import 'package:todolist_flutter/repository/data_repo.dart';
+import 'package:todolist_flutter/repository/db_repo.dart';
 import 'package:todolist_flutter/repository/net_repo.dart';
 import 'package:logger/logger.dart';
 
@@ -13,7 +15,7 @@ class DI {
     navKey: GlobalKey<NavigatorState>(),
     scaffoldKey: GlobalKey<ScaffoldMessengerState>(),
     logger: Logger(),
-    repo: NetRepo(dio: Dio(BaseOptions())),
+    repo: DataRepo(netRepo: NetRepo(dio: Dio()), dbRepo: DbRepo()),
   );
 
   final listHolder = ListHolder();

@@ -7,6 +7,7 @@ import 'package:todolist_flutter/constants/my_http_overrides.dart';
 import 'package:todolist_flutter/entity/di.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   di.init();
   runApp(const ProviderScope(child: App()));
