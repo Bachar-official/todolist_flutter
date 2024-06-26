@@ -8,9 +8,22 @@ class DataRepo {
 
   const DataRepo({required this.netRepo, required this.dbRepo});
 
+  Future<void> initialize() async => await dbRepo.initialize();
+
+  Future<List<Todo>> syncTodos() async {
+    var localTodos = await dbRepo.getTodos();
+    var localRevision = await dbRepo.getRevision();
+    if (await netRepo.hasConnection()) {
+      var response = await netRepo.updateTodoList(localTodos, localRevision);
+      await dbRepo.addList(response.todos);
+      await dbRepo.updateRevision(response.revision);
+    }
+    return dbRepo.getTodos();
+  }
+
   Future<List<Todo>> getList() async {
     if (await netRepo.hasConnection()) {
-      var response = await netRepo.getTodos();
+      var response = await netRepo.getTodos(await dbRepo.getRevision());
       await dbRepo.addList(response.todos);
       await dbRepo.updateRevision(response.revision);
     }

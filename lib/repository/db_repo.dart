@@ -8,12 +8,10 @@ class DbRepo {
   static const _revisionTable = 'revision';
   late final Database _db;
 
-  DbRepo() {
-    initialize().then((db) => _db = db);
-  }
+  DbRepo();
 
-  Future<Database> initialize() async {
-    return openDatabase('todos.db', version: 1, onCreate: (db, version) {
+  Future<void> initialize() async {
+    _db = await openDatabase('todos.db', version: 1, onCreate: (db, version) {
       _db.execute('CREATE TABLE IF NOT EXISTS $_todoTable '
           '(id TEXT PRIMARY KEY, done BOOLEAN NOT NULL CHECK (done IN (0, 1)), '
           'text TEXT, importance TEXT, deadline INTEGER, createdAt INTEGER, '

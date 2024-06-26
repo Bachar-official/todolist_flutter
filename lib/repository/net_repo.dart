@@ -25,7 +25,7 @@ class NetRepo {
     }
   }
 
-  Future<TodoListResponse> getTodos() async {
+  Future<TodoListResponse> getTodos(int revision) async {
     var response = await dio.get(Urls.listUrl, options: getOptions);
     if (response.statusCode == 200) {
       var array = response.data['list'] as List<dynamic>;
@@ -34,7 +34,22 @@ class NetRepo {
         revision: response.data['revision'] as int
       );
     }
-    return (todos: <Todo>[], revision: 0);
+    return (todos: <Todo>[], revision: revision);
+  }
+
+  Future<TodoListResponse> updateTodoList(
+      List<Todo> todos, int revision) async {
+    var response = await dio.patch(Urls.listUrl,
+        data: ParseUtils.TodoListToJson(todos),
+        options: mutateOptions(revision));
+    if (response.statusCode == 200) {
+      var array = response.data['list'] as List<dynamic>;
+      return (
+        todos: await compute(ParseUtils.parseTodoList, array),
+        revision: response.data['revision'] as int
+      );
+    }
+    return (todos: <Todo>[], revision: revision);
   }
 
   Future<TodoResponse?> getTodo(String id) async {

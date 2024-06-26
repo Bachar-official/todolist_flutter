@@ -30,8 +30,9 @@ class DI {
   }
 
   Future<void> init() async {
+    await deps.repo.initialize();
     deps.logger.i('DI initialized');
-    await listManager.getList();
+    await listManager.syncTodos();
   }
 }
 

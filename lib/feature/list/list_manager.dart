@@ -3,9 +3,7 @@ import 'package:todolist_flutter/entity/manager_deps.dart';
 import 'package:todolist_flutter/entity/todo.dart';
 import 'package:todolist_flutter/feature/item/item_manager.dart';
 import 'package:todolist_flutter/feature/list/list_holder.dart';
-import 'package:todolist_flutter/repository/db_repo.dart';
 import 'package:todolist_flutter/utils/catch_exceptions.dart';
-import 'package:todolist_flutter/utils/check_conditions.dart';
 import 'package:todolist_flutter/utils/logging.dart';
 
 class ListManager {
@@ -16,6 +14,20 @@ class ListManager {
   ListManager(
       {required this.deps, required this.holder, required this.itemManager});
   void setLoading(bool isLoading) => holder.setLoading(isLoading);
+
+  Future<void> syncTodos() async {
+    d(deps)('Trying to sync todos');
+    try {
+      setLoading(true);
+      var list = await deps.repo.syncTodos();
+      holder.setList(list);
+      i(deps)('Synced! Found ${list.length} todos');
+    } catch (e, s) {
+      catchExceptions(e, s, deps);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   Future<void> getList() async {
     d(deps)('Trying to get todo list');
