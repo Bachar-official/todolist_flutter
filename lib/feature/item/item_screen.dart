@@ -7,6 +7,7 @@ import 'package:todolist_flutter/entity/importance.dart';
 import 'package:todolist_flutter/feature/item/item_holder.dart';
 import 'package:todolist_flutter/feature/item/item_state.dart';
 import 'package:todolist_flutter/utils/validators.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final provider =
     StateNotifierProvider<ItemHolder, ItemState>((ref) => di.itemHolder);
@@ -20,6 +21,7 @@ class ItemScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(provider);
     final manager = di.itemManager;
+    final localization = AppLocalizations.of(context);
 
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
@@ -36,7 +38,7 @@ class ItemScreen extends ConsumerWidget {
                 actions: [
                   TextButton(
                     onPressed: manager.save,
-                    child: const Text('СОХРАНИТЬ'),
+                    child: Text(localization.save.toUpperCase()),
                   )
                 ],
               ),
@@ -53,10 +55,10 @@ class ItemScreen extends ConsumerWidget {
                           minLines: 3,
                           maxLines: 10,
                           controller: manager.descriptionC,
-                          decoration: const InputDecoration(
-                            hintText: 'Что нужно сделать...',
+                          decoration: InputDecoration(
+                            hintText: localization.what_should_be_done,
                             filled: true,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
                           ),
@@ -64,13 +66,13 @@ class ItemScreen extends ConsumerWidget {
                         DropdownButtonFormField<Importance>(
                             value: state.importance,
                             iconSize: 0.0,
-                            decoration: const InputDecoration(
-                              labelText: 'Важность',
+                            decoration: InputDecoration(
+                              labelText: localization.importance,
                               suffix: null,
                               border: InputBorder.none,
                             ),
                             items: Importance.values
-                                .map((el) => el.getDropdownItem())
+                                .map((el) => el.getDropdownItem(context))
                                 .toList(),
                             onChanged: manager.setImportance),
                         divider,
@@ -80,7 +82,7 @@ class ItemScreen extends ConsumerWidget {
                         ),
                         divider,
                         IconLabelButton(
-                            label: 'Удалить',
+                            label: localization.delete,
                             onPressed:
                                 state.todo == null ? null : manager.remove),
                       ],

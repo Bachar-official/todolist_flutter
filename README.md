@@ -7,7 +7,8 @@ Awesome To do application.
 - [x] CRUD operations with API
 - [x] CRUD operaitons with local DB
 - [x] Syncronization
-- [x] Dark theme already supported
+- [x] Light/Dark theme synced with system theme
+- [x] English/Russian localizations provided
 
 ## Download link
 

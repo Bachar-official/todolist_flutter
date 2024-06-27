@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum Importance {
   basic('basic'),
@@ -9,25 +10,27 @@ enum Importance {
 
   const Importance(this.name);
 
-  factory Importance.fromString(String name) => Importance.values.firstWhere((el) => el.name.toLowerCase() == name.toLowerCase());
+  factory Importance.fromString(String name) => Importance.values
+      .firstWhere((el) => el.name.toLowerCase() == name.toLowerCase());
 
   @override
   String toString() => name;
 
-  String getImportanceName() {
+  String getImportanceName(BuildContext context) {
+    final localization = AppLocalizations.of(context);
     switch (this) {
       case Importance.low:
-        return 'Низкий';
+        return localization.importance_low;
       case Importance.important:
-        return '!! Высокий';
+        return localization.importance_high;
       case Importance.basic:
       default:
-        return 'Нет';
+        return localization.importance_basic;
     }
   }
 
-  DropdownMenuItem<Importance> getDropdownItem() {
-    var name = getImportanceName();
+  DropdownMenuItem<Importance> getDropdownItem(BuildContext context) {
+    var name = getImportanceName(context);
     switch (this) {
       case Importance.low:
         return DropdownMenuItem(value: this, child: Text(name));

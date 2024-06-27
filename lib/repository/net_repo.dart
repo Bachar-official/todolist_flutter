@@ -40,7 +40,7 @@ class NetRepo {
   Future<TodoListResponse> updateTodoList(
       List<Todo> todos, int revision) async {
     var response = await dio.patch(Urls.listUrl,
-        data: ParseUtils.TodoListToJson(todos),
+        data: ParseUtils.todoListToJson(todos),
         options: mutateOptions(revision));
     if (response.statusCode == 200) {
       var array = response.data['list'] as List<dynamic>;

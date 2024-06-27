@@ -7,7 +7,7 @@ class ParseUtils {
       list.map((el) => Todo.fromJson(el)).toList();
   static List<Todo> parseDbTodoList(List<Map<String, Object?>> list) =>
       list.map((el) => Todo.fromDb(el)).toList();
-  static String TodoListToJson(List<Todo> todos) => jsonEncode({
+  static String todoListToJson(List<Todo> todos) => jsonEncode({
         'list': todos.map((todo) => todo.toMap()).toList(),
       });
 }

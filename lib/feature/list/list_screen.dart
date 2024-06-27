@@ -6,6 +6,7 @@ import 'package:todolist_flutter/constants/text_styles.dart';
 import 'package:todolist_flutter/entity/di.dart';
 import 'package:todolist_flutter/feature/list/list_holder.dart';
 import 'package:todolist_flutter/feature/list/list_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final provider =
     StateNotifierProvider<ListHolder, ListState>((ref) => di.listHolder);
@@ -18,6 +19,7 @@ class ListScreen extends ConsumerWidget {
     final state = ref.watch(provider);
     final manager = di.listManager;
     final bright = Theme.of(context).brightness;
+    final localization = AppLocalizations.of(context);
 
     final doneStyle = TextStyles.button.copyWith(
       color: bright == Brightness.dark
@@ -48,8 +50,8 @@ class ListScreen extends ConsumerWidget {
                               : const Icon(Icons.visibility_off),
                         ),
                       ],
-                      flexibleSpace: const FlexibleSpaceBar(
-                        title: Text('Мои дела'),
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(localization.my_todos),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -58,7 +60,7 @@ class ListScreen extends ConsumerWidget {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 73),
                           child: Text(
-                            'Выполнено — ${state.doneLength}',
+                            '${localization.completed} — ${state.doneLength}',
                             style: doneStyle,
                           ),
                         ),
@@ -81,7 +83,8 @@ class ListScreen extends ConsumerWidget {
                             child: Padding(
                               padding:
                                   const EdgeInsets.fromLTRB(73, 20, 25, 25),
-                              child: Text('Новое', style: doneStyle),
+                              child:
+                                  Text(localization.new_todo, style: doneStyle),
                             ),
                           ),
                         ),
