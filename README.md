@@ -1,6 +1,14 @@
 # todolist_flutter
 
-A new Flutter project.
+Awesome To do application.
+
+## Features
+
+- [x] CRUD operations with API
+- [x] CRUD operaitons with local DB
+- [x] Syncronization
+- [x] Light/Dark theme synced with system theme
+- [x] English/Russian localizations provided
 
 ## Download link
 
@@ -10,3 +18,11 @@ A new Flutter project.
 
 ![Dark theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr1.png?raw=true)
 ![Light theme](https://github.com/Bachar-official/todolist_flutter/blob/homework/1/files/scr2.png?raw=true)
+
+## Where I should put my token?
+
+Just put it into `/lib/constants/token.dart`:
+
+```token.dart
+const token = 'my_token';
+```

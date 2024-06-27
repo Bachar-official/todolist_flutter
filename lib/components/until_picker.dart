@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist_flutter/constants/palette.dart';
 import 'package:todolist_flutter/utils/readable_date.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UntilPicker extends StatelessWidget {
   final DateTime? doUntil;
@@ -10,6 +11,7 @@ class UntilPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var brightness = Theme.of(context).brightness;
+    final localization = AppLocalizations.of(context);
     Future<DateTime?> onChangeDate() => showDatePicker(
           context: context,
           firstDate: DateTime.now(),
@@ -29,7 +31,7 @@ class UntilPicker extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Сделать до'),
+              Text(localization.do_until),
               Switch(
                 value: doUntil != null,
                 onChanged: (value) {

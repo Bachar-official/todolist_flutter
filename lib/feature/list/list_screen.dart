@@ -6,6 +6,7 @@ import 'package:todolist_flutter/constants/text_styles.dart';
 import 'package:todolist_flutter/entity/di.dart';
 import 'package:todolist_flutter/feature/list/list_holder.dart';
 import 'package:todolist_flutter/feature/list/list_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final provider =
     StateNotifierProvider<ListHolder, ListState>((ref) => di.listHolder);
@@ -18,6 +19,7 @@ class ListScreen extends ConsumerWidget {
     final state = ref.watch(provider);
     final manager = di.listManager;
     final bright = Theme.of(context).brightness;
+    final localization = AppLocalizations.of(context);
 
     final doneStyle = TextStyles.button.copyWith(
       color: bright == Brightness.dark
@@ -25,68 +27,77 @@ class ListScreen extends ConsumerWidget {
           : LightPalette.labelTertiary,
     );
 
-    return SafeArea(
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              snap: false,
-              pinned: true,
-              floating: false,
-              expandedHeight: 120,
-              actions: [
-                IconButton(
-                  onPressed: manager.setOnlyCompleted,
-                  icon: state.isCompleted
-                      ? const Icon(Icons.visibility)
-                      : const Icon(Icons.visibility_off),
-                ),
-              ],
-              flexibleSpace: const FlexibleSpaceBar(
-                title: Text('Мои дела'),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 20,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 73),
-                  child: Text(
-                    'Выполнено — ${manager.deps.repo.getFilteredList(true).length}',
-                    style: doneStyle,
-                  ),
-                ),
-              ),
-            ),
-            SliverList.builder(
-                itemBuilder: (ctx, index) => TodoCard(
-                      todo: state.list[index],
-                      onGoToItemScreen: manager.goToItemScreen,
-                      onCheckTodo: manager.checkTodo,
-                      onRemoveTodo: manager.removeTodo,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300),
+      transitionBuilder: (Widget child, Animation<double> animation) =>
+          FadeTransition(opacity: animation, child: child),
+      child: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SafeArea(
+              child: Scaffold(
+                body: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      snap: false,
+                      pinned: true,
+                      floating: false,
+                      expandedHeight: 120,
+                      actions: [
+                        IconButton(
+                          onPressed: manager.setOnlyCompleted,
+                          icon: state.isCompleted
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
+                        ),
+                      ],
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(localization.my_todos),
+                      ),
                     ),
-                itemCount: state.list.length),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Card(
-                  child: GestureDetector(
-                    onTap: () => manager.goToItemScreen(null),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(73, 20, 25, 25),
-                      child: Text('Новое', style: doneStyle),
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 20,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 73),
+                          child: Text(
+                            '${localization.completed} — ${state.doneLength}',
+                            style: doneStyle,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    SliverList.builder(
+                        itemBuilder: (ctx, index) => TodoCard(
+                              todo: state.viewList[index],
+                              onGoToItemScreen: manager.goToItemScreen,
+                              onCheckTodo: manager.checkTodo,
+                              onRemoveTodo: manager.removeTodo,
+                            ),
+                        itemCount: state.viewList.length),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Card(
+                          child: GestureDetector(
+                            onTap: () => manager.goToItemScreen(null),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(73, 20, 25, 25),
+                              child:
+                                  Text(localization.new_todo, style: doneStyle),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () => manager.goToItemScreen(null),
+                  child: const Icon(Icons.add),
                 ),
               ),
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => manager.goToItemScreen(null),
-          child: const Icon(Icons.add),
-        ),
-      ),
     );
   }
 }

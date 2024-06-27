@@ -1,0 +1,13 @@
+{
+    "my_todos": "Мои дела",
+    "completed": "Выполнено",
+    "new_todo": "Новое",
+    "save": "Сохранить",
+    "importance": "Важность",
+    "importance_basic": "Нет",
+    "importance_low": "Низкий",
+    "importance_high": "!!Высокий",
+    "do_until": "Сделать до",
+    "delete": "Удалить",
+    "what_should_be_done": "Что нужно сделать"
+}

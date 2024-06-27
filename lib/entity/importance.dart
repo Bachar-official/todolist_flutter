@@ -1,28 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum Importance {
-  none,
-  low,
-  high;
+  basic('basic'),
+  low('low'),
+  important('important');
 
-  String getImportanceName() {
+  final String name;
+
+  const Importance(this.name);
+
+  factory Importance.fromString(String name) => Importance.values
+      .firstWhere((el) => el.name.toLowerCase() == name.toLowerCase());
+
+  @override
+  String toString() => name;
+
+  String getImportanceName(BuildContext context) {
+    final localization = AppLocalizations.of(context);
     switch (this) {
       case Importance.low:
-        return 'Низкий';
-      case Importance.high:
-        return '!! Высокий';
-      case Importance.none:
+        return localization.importance_low;
+      case Importance.important:
+        return localization.importance_high;
+      case Importance.basic:
       default:
-        return 'Нет';
+        return localization.importance_basic;
     }
   }
 
-  DropdownMenuItem<Importance> getDropdownItem() {
-    var name = getImportanceName();
+  DropdownMenuItem<Importance> getDropdownItem(BuildContext context) {
+    var name = getImportanceName(context);
     switch (this) {
       case Importance.low:
         return DropdownMenuItem(value: this, child: Text(name));
-      case Importance.high:
+      case Importance.important:
         return DropdownMenuItem(
           value: this,
           child: Text(
@@ -30,7 +42,7 @@ enum Importance {
             style: const TextStyle(color: Colors.red),
           ),
         );
-      case Importance.none:
+      case Importance.basic:
       default:
         return DropdownMenuItem(value: this, child: Text(name));
     }
@@ -40,9 +52,9 @@ enum Importance {
     switch (this) {
       case Importance.low:
         return const Icon(Icons.arrow_downward);
-      case Importance.high:
+      case Importance.important:
         return const Text('!!', style: TextStyle(color: Colors.red));
-      case Importance.none:
+      case Importance.basic:
       default:
         return const SizedBox.shrink();
     }

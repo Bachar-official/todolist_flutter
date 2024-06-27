@@ -21,7 +21,7 @@ class TodoCard extends StatelessWidget {
     var bright = Theme.of(context).brightness;
 
     TextStyle? getDescriptionStyle() {
-      return todo.isCompleted
+      return todo.done
           ? TextStyle(
               color: bright == Brightness.dark
                   ? DarkPalette.labelTertiary
@@ -38,14 +38,28 @@ class TodoCard extends StatelessWidget {
               : LightPalette.labelTertiary);
     }
 
+    ShapeBorder? getShapeBorder() {
+      if (todo.color != null) {
+        return RoundedRectangleBorder(
+          side: BorderSide(
+            width: 2.0,
+            color: todo.color!,
+          ),
+          borderRadius: BorderRadius.circular(20.0),
+        );
+      }
+      return null;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Card(
+        shape: getShapeBorder(),
         child: Dismissible(
-          direction: todo.isCompleted
+          direction: todo.done
               ? DismissDirection.endToStart
               : DismissDirection.horizontal,
-          key: ValueKey<String>(todo.uuid),
+          key: ValueKey<String>(todo.id),
           onDismissed: (direction) {
             if (direction == DismissDirection.endToStart) {
               onRemoveTodo(todo);
@@ -100,7 +114,7 @@ class TodoCard extends StatelessWidget {
                           children: [
                             todo.importance.getIcon(),
                             Text(
-                              todo.description,
+                              todo.text,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: getDescriptionStyle(),
@@ -108,9 +122,9 @@ class TodoCard extends StatelessWidget {
                           ],
                         ),
                         Visibility(
-                          visible: todo.doUntil != null,
+                          visible: todo.deadline != null,
                           child: Text(
-                            getReadableDate(todo.doUntil),
+                            getReadableDate(todo.deadline),
                             style: getDateStyle(),
                           ),
                         ),
